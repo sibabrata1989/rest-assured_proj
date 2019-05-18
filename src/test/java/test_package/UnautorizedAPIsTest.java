@@ -81,7 +81,6 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 							  JsonPath js= ReusableMethodsClass.Raw_to_Json(res);
 							  System.out.println("Below is the response validation");
 							  //System.out.println(js.get("text"));
-							  //System.out.println(js.get("id"));
 							 // id=js.get("id").toString();
 	
 	
