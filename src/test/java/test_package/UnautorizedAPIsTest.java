@@ -1,135 +1,157 @@
 package test_package;
-import static org.hamcrest.Matchers.equalTo;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import library_package.*;
 import org.testng.annotations.Test;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.equalTo;
-
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Random;
 
 public class UnautorizedAPIsTest implements ConstantVariables {
 
+	Random rndNum = new Random();
 	Properties prp;
+	String name;
 	
 	@BeforeClass
 	public void commonService() throws IOException
 	{
 		prp = ReusableMethodsClass.getPropertyFile();
+		name = "ModelName_"+rndNum.nextInt(1000);
+		
 	}
 	
-	@Test
-	public void getGpusAvailable()
+
+	@Test(priority=1)
+	public void configNew()
 	{
+		try{
+			 RestAssured.baseURI= prp.getProperty("HOST");
 		
-		RestAssured.baseURI= prp.getProperty("HOST");
-		
-		Response res= given().
+					 given().
 							  header("Content-Type","application/json").
-							
+							  body(payload.configNew(name)).
 						 
 					  when().    
-				              get("/configuration/gpus/available").
+				              post("/configuration/new").
 				              
-				  
-				      then().extract().response();
-	
-							 JsonPath js= ReusableMethodsClass.Raw_to_Json(res);
+				      then().
+				      		  assertThat().statusCode(200).and().contentType(ContentType.JSON);
+					  Thread.sleep(5000);
+					  
+		}
+		catch(Exception e)
+		{
+			Assert.fail("The new Configuration Failed");
+		}
 						 
 	}
-	
-	@Test
-	public void getInvocationCancel()
+	@Test(priority=2)
+	public void postFinetune1()
 	{
-		
-		RestAssured.baseURI= prp.getProperty("HOST");
-		
-		Response res= given().
-							  header("Content-Type","application/json").
-							  body("{\"invocationId\":10}").
-						 
-					  when().    
-				              post("/invocation/cancel").
-				              
-				  
-				      then().extract().response();
-	
-							 JsonPath js= ReusableMethodsClass.Raw_to_Json(res);
-						 
-	}
-	@Test
-	public void postFinetune()
-	{
+		try
+		{
 		
 		RestAssured.baseURI=prp.getProperty("HOST");
 		
-		Response res= given().
+					  given().
 				  	          header("Content-Type","application/json").
-				  	          body(payload.finetunePostPayload("name")).
+				  	          body(payload.finetunePostBodyPayload1(name)).
 								
 					   when().
 					          post("/cycle/finetune").
 					          
-					   then().extract().response();
-	
-							  JsonPath js= ReusableMethodsClass.Raw_to_Json(res);
-							  System.out.println("Below is the response validation");
-							  //System.out.println(js.get("text"));
-							 // id=js.get("id").toString();
-	
-	
+					          then().
+				      		  assertThat().statusCode(200).and().contentType(ContentType.JSON);
+					  Thread.sleep(3000);
+		}
+		catch(Exception e)
+		{
+			Assert.fail("The Post fine tune with empty value is Failed");
+		}
+		
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void postFinetune2()
 	{
-		
+		try
+		{
+
 		RestAssured.baseURI=prp.getProperty("HOST");
 		
-		Response res= given().
+					  given().
 				  	          header("Content-Type","application/json").
-				  	          body(payload.finetunePostBodyPayload2()).
+				  	          body(payload.finetunePostPayload2(name)).
 								
 					   when().
 					          post("/cycle/finetune").
 					          
-					   then().extract().response();
-	
-							  JsonPath js= ReusableMethodsClass.Raw_to_Json(res);
-							  System.out.println("Below is the response validation");
-							  //System.out.println(js.get("text"));
-							  //System.out.println(js.get("id"));
-							 // id=js.get("id").toString();
-	
-	
+					          then().
+				      		  assertThat().statusCode(200).and().contentType(ContentType.JSON);
+					  Thread.sleep(3000);
+		}
+		catch(Exception e)
+		{
+			Assert.fail("The Post fine tune with values is Failed");
+		}
 	}
-	@Test
+		
+	@Test(priority=4)
 	public void postConfigurationResume()
 	{
-		
+		try{
+
+
 		RestAssured.baseURI=prp.getProperty("HOST");
 		
-		Response res= given().
+		              given().
 				  	          header("Content-Type","application/json").
-				  	          body(payload.configResumePostPayload("name")).
+				  	          body(payload.configResumePostPayload(name)).
 								
 					   when().
 					          post("/configuration/resume").
 					          
-					   then().extract().response();
+					          then().
+				      		  assertThat().statusCode(200).and().contentType(ContentType.JSON);
+		              Thread.sleep(3000);
+							  
+		}
+		catch(Exception e)
+		{
+			Assert.fail("The Configuration resume is Failed");
+		}
 	
-							  JsonPath js= ReusableMethodsClass.Raw_to_Json(res);
-							  System.out.println("Below is the response validation");
-							  //System.out.println(js.get("text"));
-							  //System.out.println(js.get("id"));
-							 // id=js.get("id").toString();
 	
+	}
+	@Test(priority=5)
+	public void getGpusAvailable()
+	{
+		try
+		{
+		RestAssured.baseURI= prp.getProperty("HOST");
+		
+		Response res= given().
+							  header("Content-Type","application/json").					
+						 
+					  when().    
+				              get("/configuration/gpus/available").
+				              			  
+				      then().
+				      		  extract().response();
 	
+							  String responseString = res.asString();
+							  Assert.assertTrue(responseString.contains("gensynth"), "Failed!: The rsponse host name doesnt match!");
+						 
+		}
+		catch(Exception e)
+		{
+			Assert.fail("The GPUS available get call is Failed");
+		}
 	}
 }
