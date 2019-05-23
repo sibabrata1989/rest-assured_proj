@@ -41,7 +41,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 				              post("/configuration/new").
 				              
 				      then().
-				      		  assertThat().statusCode(200).and().contentType(ContentType.JSON);
+				      		  assertThat().statusCode(200);
 					  Thread.sleep(5000);
 					  
 		}
