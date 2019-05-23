@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="5" ignored="0" total="5" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="799" started-at="2019-05-20T03:21:38Z" finished-at="2019-05-20T03:21:39Z">
+  <suite name="Default suite" duration-ms="12964" started-at="2019-05-23T02:05:23Z" finished-at="2019-05-23T02:05:36Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="799" started-at="2019-05-20T03:21:38Z" finished-at="2019-05-20T03:21:39Z">
+    <test name="Default test" duration-ms="12964" started-at="2019-05-23T02:05:23Z" finished-at="2019-05-23T02:05:36Z">
       <class name="test_package.UnautorizedAPIsTest">
-        <test-method status="PASS" signature="commonService()[pri:0, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="commonService" is-config="true" duration-ms="14" started-at="2019-05-20T08:51:38Z" finished-at="2019-05-20T08:51:38Z">
+        <test-method status="PASS" signature="commonService()[pri:0, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="commonService" is-config="true" duration-ms="13" started-at="2019-05-23T07:35:23Z" finished-at="2019-05-23T07:35:23Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- commonService -->
-        <test-method status="FAIL" signature="configNew()[pri:1, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="configNew" duration-ms="711" started-at="2019-05-20T08:51:38Z" finished-at="2019-05-20T08:51:39Z">
+        <test-method status="FAIL" signature="configNew()[pri:1, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="configNew" duration-ms="4683" started-at="2019-05-23T07:35:24Z" finished-at="2019-05-23T07:35:28Z">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[The new Configuration Failed]]>
@@ -51,7 +51,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- configNew -->
-        <test-method status="FAIL" signature="postFinetune1()[pri:2, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="postFinetune1" duration-ms="2" started-at="2019-05-20T08:51:39Z" finished-at="2019-05-20T08:51:39Z">
+        <test-method status="FAIL" signature="postFinetune1()[pri:2, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="postFinetune1" duration-ms="2042" started-at="2019-05-23T07:35:28Z" finished-at="2019-05-23T07:35:30Z">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[The Post fine tune with empty value is Failed]]>
@@ -91,7 +91,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- postFinetune1 -->
-        <test-method status="FAIL" signature="postFinetune2()[pri:3, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="postFinetune2" duration-ms="3" started-at="2019-05-20T08:51:39Z" finished-at="2019-05-20T08:51:39Z">
+        <test-method status="FAIL" signature="postFinetune2()[pri:3, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="postFinetune2" duration-ms="2034" started-at="2019-05-23T07:35:30Z" finished-at="2019-05-23T07:35:32Z">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[The Post fine tune with values is Failed]]>
@@ -131,7 +131,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- postFinetune2 -->
-        <test-method status="FAIL" signature="postConfigurationResume()[pri:4, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="postConfigurationResume" duration-ms="2" started-at="2019-05-20T08:51:39Z" finished-at="2019-05-20T08:51:39Z">
+        <test-method status="FAIL" signature="postConfigurationResume()[pri:4, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="postConfigurationResume" duration-ms="2057" started-at="2019-05-23T07:35:32Z" finished-at="2019-05-23T07:35:34Z">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[The Configuration resume is Failed]]>
@@ -171,7 +171,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- postConfigurationResume -->
-        <test-method status="FAIL" signature="getGpusAvailable()[pri:5, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="getGpusAvailable" duration-ms="7" started-at="2019-05-20T08:51:39Z" finished-at="2019-05-20T08:51:39Z">
+        <test-method status="FAIL" signature="getGpusAvailable()[pri:5, instance:test_package.UnautorizedAPIsTest@2a5ca609]" name="getGpusAvailable" duration-ms="2069" started-at="2019-05-23T07:35:34Z" finished-at="2019-05-23T07:35:36Z">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[The GPUS available get call is Failed]]>

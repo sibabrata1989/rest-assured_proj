@@ -45,7 +45,7 @@ public class ReusableMethodsClass {
 	public static Properties getPropertyFile() throws IOException
 	{
 		Properties prp = new Properties();
-		FileInputStream fs = new FileInputStream("D:/DemoRestAssured/rest-assured/src/test/java/Library_File/file.properties");
+		FileInputStream fs = new FileInputStream("./file.properties");
 		prp.load(fs);
 		return prp;
 	}
