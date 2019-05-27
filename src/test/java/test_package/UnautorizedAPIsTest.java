@@ -17,6 +17,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	Random rndNum = new Random();
 	Properties prp;
 	String name;
+	String payload;
 	
 	@BeforeClass
 	public void commonService() throws IOException
@@ -31,11 +32,13 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	public void configNew()
 	{
 		try{
+			 payload = ReusableMethodsClass.generateStringFromResources("./Resources/configNew.json");
+			 payload = payload.replace("##ModuleName##", ""+name+"");
 			 RestAssured.baseURI= prp.getProperty("HOST");
 		
 					 given().
 							  header("Content-Type","application/json").
-							  body(payload.configNew(name)).
+							  body(payload).
 						 
 					  when().    
 				              post("/configuration/new").
@@ -47,6 +50,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			Assert.fail("The new Configuration Failed");
 		}
 						 
@@ -56,12 +60,13 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	{
 		try
 		{
-		
+		payload = ReusableMethodsClass.generateStringFromResources("./Resources/finetune1.json");
+		payload = payload.replace("##ModuleName##", ""+name+"");
 		RestAssured.baseURI=prp.getProperty("HOST");
 		
 					  given().
 				  	          header("Content-Type","application/json").
-				  	          body(payload.finetunePostBodyPayload1(name)).
+				  	          body(payload).
 								
 					   when().
 					          post("/cycle/finetune").
@@ -72,6 +77,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			Assert.fail("The Post fine tune with empty value is Failed");
 		}
 		
@@ -82,12 +88,13 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	{
 		try
 		{
-
+		payload = ReusableMethodsClass.generateStringFromResources("./Resources/finetune2.json");
+		payload = payload.replace("##ModuleName##", ""+name+"");
 		RestAssured.baseURI=prp.getProperty("HOST");
 		
 					  given().
 				  	          header("Content-Type","application/json").
-				  	          body(payload.finetunePostPayload2(name)).
+				  	          body(payload).
 								
 					   when().
 					          post("/cycle/finetune").
@@ -98,6 +105,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			Assert.fail("The Post fine tune with values is Failed");
 		}
 	}
@@ -107,12 +115,13 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	{
 		try{
 
-
+		payload = ReusableMethodsClass.generateStringFromResources("./Resources/configResume.json");
+		
 		RestAssured.baseURI=prp.getProperty("HOST");
 		
 		              given().
 				  	          header("Content-Type","application/json").
-				  	          body(payload.configResumePostPayload(name)).
+				  	          body(payload).
 								
 					   when().
 					          post("/configuration/resume").
@@ -124,6 +133,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			Assert.fail("The Configuration resume is Failed");
 		}
 	
@@ -144,14 +154,72 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 				              			  
 				      then().
 				      		  extract().response();
-	
+		
+							  System.out.println(res);
 							  String responseString = res.asString();
 							  Assert.assertTrue(responseString.contains("gensynth"), "Failed!: The rsponse host name doesnt match!");
 						 
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			Assert.fail("The GPUS available get call is Failed");
+		}
+	}
+	@Test(priority=6)
+	public void postFinetune1Negative()
+	{
+		try
+		{
+		payload = ReusableMethodsClass.generateStringFromResources("./Resources/finetune1.json");
+		payload = payload.replace("##ModuleName##", ""+name+"");
+		payload = payload.replaceAll("/d", "-1");
+		RestAssured.baseURI=prp.getProperty("HOST");
+		
+					  given().
+				  	          header("Content-Type","application/json").
+				  	          body(payload).
+								
+					   when().
+					          post("/cycle/finetune").
+					          
+					          then().
+				      		  assertThat().statusCode(400).and().contentType(ContentType.JSON);
+					  Thread.sleep(3000);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("The Post fine tune with empty value is Failed");
+		}
+		
+	}
+	
+	@Test(priority=7)
+	public void postFinetune2Negative()
+	{
+		try
+		{
+		payload = ReusableMethodsClass.generateStringFromResources("./Resources/finetune2.json");
+		payload = payload.replace("##ModuleName##", ""+name+"");
+		payload = payload.replaceAll("/d", "-100");
+		RestAssured.baseURI=prp.getProperty("HOST");
+		
+					  given().
+				  	          header("Content-Type","application/json").
+				  	          body(payload).
+								
+					   when().
+					          post("/cycle/finetune").
+					          
+					          then().
+				      		  assertThat().statusCode(400).and().contentType(ContentType.JSON);
+					  Thread.sleep(3000);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("The Post fine tune with values is Failed");
 		}
 	}
 }

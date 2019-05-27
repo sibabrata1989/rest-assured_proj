@@ -24,7 +24,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite, 5 failed tests</span>
+      <span class="top-banner-font-1">1 suite, 7 failed tests</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" class="navigator-link " panel-name="test-xml-Default_suite">
-                    <span>C:\Users\sony\AppData\Local\Temp\testng-eclipse-1651405853\testng-customsuite.xml</span>
+                    <span>C:\Users\sony\AppData\Local\Temp\testng-eclipse--22339495\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">5 methods, 5 failed,   </span>
+                    <span class="method-stats">7 methods, 7 failed,   </span>
                   </li>
                   <li>
                     <span class="method-list-title failed">Failed methods</span>
@@ -122,7 +122,17 @@
                       <br/>
                       <span>
                         <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="test_package.UnautorizedAPIsTest" hash-for-method="postFinetune1Negative">postFinetune1Negative</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="failed.png"/>
                         <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="test_package.UnautorizedAPIsTest" hash-for-method="postFinetune2">postFinetune2</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="test_package.UnautorizedAPIsTest" hash-for-method="postFinetune2Negative">postFinetune2Negative</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-Default_suite -->
@@ -150,7 +160,7 @@
                   <span class="method-name">configNew</span>
                   <div class="stack-trace">java.lang.AssertionError: The new Configuration Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.configNew(UnautorizedAPIsTest.java:50)
+	at test_package.UnautorizedAPIsTest.configNew(UnautorizedAPIsTest.java:54)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -187,7 +197,7 @@
                   <span class="method-name">getGpusAvailable</span>
                   <div class="stack-trace">java.lang.AssertionError: The GPUS available get call is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.getGpusAvailable(UnautorizedAPIsTest.java:154)
+	at test_package.UnautorizedAPIsTest.getGpusAvailable(UnautorizedAPIsTest.java:166)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -224,7 +234,7 @@
                   <span class="method-name">postConfigurationResume</span>
                   <div class="stack-trace">java.lang.AssertionError: The Configuration resume is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postConfigurationResume(UnautorizedAPIsTest.java:127)
+	at test_package.UnautorizedAPIsTest.postConfigurationResume(UnautorizedAPIsTest.java:137)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -261,7 +271,44 @@
                   <span class="method-name">postFinetune1</span>
                   <div class="stack-trace">java.lang.AssertionError: The Post fine tune with empty value is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postFinetune1(UnautorizedAPIsTest.java:75)
+	at test_package.UnautorizedAPIsTest.postFinetune1(UnautorizedAPIsTest.java:81)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="postFinetune1Negative">
+                  </a> <!-- postFinetune1Negative -->
+                  <span class="method-name">postFinetune1Negative</span>
+                  <div class="stack-trace">java.lang.AssertionError: The Post fine tune with empty value is Failed
+	at org.testng.Assert.fail(Assert.java:93)
+	at test_package.UnautorizedAPIsTest.postFinetune1Negative(UnautorizedAPIsTest.java:193)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -298,7 +345,44 @@
                   <span class="method-name">postFinetune2</span>
                   <div class="stack-trace">java.lang.AssertionError: The Post fine tune with values is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postFinetune2(UnautorizedAPIsTest.java:101)
+	at test_package.UnautorizedAPIsTest.postFinetune2(UnautorizedAPIsTest.java:109)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="postFinetune2Negative">
+                  </a> <!-- postFinetune2Negative -->
+                  <span class="method-name">postFinetune2Negative</span>
+                  <div class="stack-trace">java.lang.AssertionError: The Post fine tune with values is Failed
+	at org.testng.Assert.fail(Assert.java:93)
+	at test_package.UnautorizedAPIsTest.postFinetune2Negative(UnautorizedAPIsTest.java:222)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -333,7 +417,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\sony\AppData\Local\Temp\testng-eclipse-1651405853\testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\sony\AppData\Local\Temp\testng-eclipse--22339495\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -382,32 +466,40 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(5);
+data.addRows(7);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'configNew')
 data.setCell(0, 2, 'test_package.UnautorizedAPIsTest')
-data.setCell(0, 3, 4683);
+data.setCell(0, 3, 6122);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'getGpusAvailable')
+data.setCell(1, 1, 'postFinetune2Negative')
 data.setCell(1, 2, 'test_package.UnautorizedAPIsTest')
-data.setCell(1, 3, 2069);
+data.setCell(1, 3, 2103);
 data.setCell(2, 0, 2)
-data.setCell(2, 1, 'postConfigurationResume')
+data.setCell(2, 1, 'getGpusAvailable')
 data.setCell(2, 2, 'test_package.UnautorizedAPIsTest')
-data.setCell(2, 3, 2057);
+data.setCell(2, 3, 2088);
 data.setCell(3, 0, 3)
 data.setCell(3, 1, 'postFinetune1')
 data.setCell(3, 2, 'test_package.UnautorizedAPIsTest')
-data.setCell(3, 3, 2042);
+data.setCell(3, 3, 2072);
 data.setCell(4, 0, 4)
-data.setCell(4, 1, 'postFinetune2')
+data.setCell(4, 1, 'postConfigurationResume')
 data.setCell(4, 2, 'test_package.UnautorizedAPIsTest')
-data.setCell(4, 3, 2034);
+data.setCell(4, 3, 2067);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'postFinetune2')
+data.setCell(5, 2, 'test_package.UnautorizedAPIsTest')
+data.setCell(5, 3, 2059);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'postFinetune1Negative')
+data.setCell(6, 2, 'test_package.UnautorizedAPIsTest')
+data.setCell(6, 3, 2036);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 12 seconds</span>
+              <span class="suite-total-time">Total running time: 18 seconds</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -442,31 +534,43 @@ return data;
                 <img src="failed.png">
                 </img>
                 <span class="method-name">configNew</span>
-                <span class="method-start">28 ms</span>
+                <span class="method-start">33 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">postFinetune1</span>
-                <span class="method-start">4724 ms</span>
+                <span class="method-start">6222 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">postFinetune2</span>
-                <span class="method-start">6773 ms</span>
+                <span class="method-start">8298 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">postConfigurationResume</span>
-                <span class="method-start">8817 ms</span>
+                <span class="method-start">10361 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">getGpusAvailable</span>
-                <span class="method-start">10880 ms</span>
+                <span class="method-start">12440 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">postFinetune1Negative</span>
+                <span class="method-start">14532 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">postFinetune2Negative</span>
+                <span class="method-start">16574 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

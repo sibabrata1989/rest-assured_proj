@@ -10,7 +10,9 @@
           <include name="postFinetune1"/>
           <include name="postConfigurationResume"/>
           <include name="postFinetune2"/>
+          <include name="postFinetune2Negative"/>
           <include name="configNew"/>
+          <include name="postFinetune1Negative"/>
         </methods>
       </class> <!-- test_package.UnautorizedAPIsTest -->
     </classes>

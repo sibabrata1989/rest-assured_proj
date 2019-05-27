@@ -1,0 +1,12 @@
+{
+    "model": "##ModuleName##",
+    "cycleNumber": 2,
+    "iterations": 1,
+    "trainingConfig": {
+        "learn_rate_type": "constant",
+        "learn_rate_params": {
+            "learning_rate": 1
+        }
+    },
+    "iterateFromBest": true
+}

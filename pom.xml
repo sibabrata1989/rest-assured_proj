@@ -30,6 +30,12 @@
     </pluginManagement>
   </build>
   <dependencies>
+<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+<dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>3.0.0</version>
+</dependency>
   
 <dependency>
       <groupId>junit</groupId>
