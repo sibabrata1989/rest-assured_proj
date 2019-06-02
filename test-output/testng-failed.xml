@@ -5,13 +5,16 @@
     <classes>
       <class name="test_package.UnautorizedAPIsTest">
         <methods>
+          <include name="configTemplate"/>
           <include name="getGpusAvailable"/>
           <include name="commonService"/>
+          <include name="archieveTemplate"/>
           <include name="postFinetune1"/>
           <include name="postConfigurationResume"/>
           <include name="postFinetune2"/>
           <include name="postFinetune2Negative"/>
           <include name="configNew"/>
+          <include name="configDuplicateTemplate"/>
           <include name="postFinetune1Negative"/>
         </methods>
       </class> <!-- test_package.UnautorizedAPIsTest -->

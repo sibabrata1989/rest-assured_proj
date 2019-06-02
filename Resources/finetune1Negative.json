@@ -1,0 +1,6 @@
+{
+    "model": "FINETUNE",
+    "cycleNumber":1,
+    "iterations": -1,
+    "trainingConfig": {}
+}

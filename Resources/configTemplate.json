@@ -1,0 +1,16 @@
+{
+    "name": "##ModuleName##",
+    "section": 1,
+    "template": {
+        "architecture": "1",
+        "weights": "1",
+        "input_data_names": [
+            "1"
+        ],
+        "output_names": [
+            "1"
+        ],
+        "loss_name": "1",
+        "accuracy_name": "1"
+    }
+}

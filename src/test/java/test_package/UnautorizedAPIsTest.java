@@ -26,15 +26,19 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 		name = "ModelName_"+rndNum.nextInt(1000);
 		
 	}
-	
+	private void preConditionSet(String host, String moduleName, String payLoadPath) throws IOException
+	{
+		payload = ReusableMethodsClass.generateStringFromResources(payLoadPath);
+		payload = payload.replace("##ModuleName##", moduleName);
+		RestAssured.baseURI= prp.getProperty(host);
+	}
+
 
 	@Test(priority=1)
 	public void configNew()
 	{
 		try{
-			 payload = ReusableMethodsClass.generateStringFromResources("./Resources/configNew.json");
-			 payload = payload.replace("##ModuleName##", ""+name+"");
-			 RestAssured.baseURI= prp.getProperty("HOST");
+			preConditionSet("HOST",name,"./Resources/configNew.json");
 		
 					 given().
 							  header("Content-Type","application/json").
@@ -60,9 +64,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	{
 		try
 		{
-		payload = ReusableMethodsClass.generateStringFromResources("./Resources/finetune1.json");
-		payload = payload.replace("##ModuleName##", ""+name+"");
-		RestAssured.baseURI=prp.getProperty("HOST");
+			preConditionSet("HOST",name,"./Resources/finetune1.json");
 		
 					  given().
 				  	          header("Content-Type","application/json").
@@ -88,9 +90,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	{
 		try
 		{
-		payload = ReusableMethodsClass.generateStringFromResources("./Resources/finetune2.json");
-		payload = payload.replace("##ModuleName##", ""+name+"");
-		RestAssured.baseURI=prp.getProperty("HOST");
+			preConditionSet("HOST",name,"./Resources/finetune2.json");
 		
 					  given().
 				  	          header("Content-Type","application/json").
@@ -114,11 +114,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	public void postConfigurationResume()
 	{
 		try{
-
-		payload = ReusableMethodsClass.generateStringFromResources("./Resources/configResume.json");
-		
-		RestAssured.baseURI=prp.getProperty("HOST");
-		
+			preConditionSet("HOST",name,"./Resources/configResume.json");
 		              given().
 				  	          header("Content-Type","application/json").
 				  	          body(payload).
@@ -171,11 +167,8 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	{
 		try
 		{
-		payload = ReusableMethodsClass.generateStringFromResources("./Resources/finetune1.json");
-		payload = payload.replace("##ModuleName##", ""+name+"");
-		payload = payload.replaceAll("/d", "-1");
-		RestAssured.baseURI=prp.getProperty("HOST");
-		
+			preConditionSet("HOST",name,"./Resources/finetune1Negative.json");
+			
 					  given().
 				  	          header("Content-Type","application/json").
 				  	          body(payload).
@@ -200,11 +193,8 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	{
 		try
 		{
-		payload = ReusableMethodsClass.generateStringFromResources("./Resources/finetune2.json");
-		payload = payload.replace("##ModuleName##", ""+name+"");
-		payload = payload.replaceAll("/d", "-100");
-		RestAssured.baseURI=prp.getProperty("HOST");
-		
+			preConditionSet("HOST",name,"./Resources/finetune2Negative.json");
+				
 					  given().
 				  	          header("Content-Type","application/json").
 				  	          body(payload).
@@ -221,5 +211,82 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 			e.printStackTrace();
 			Assert.fail("The Post fine tune with values is Failed");
 		}
+	}
+	@Test(priority=8)
+	public void configTemplate()
+	{
+		try{
+			preConditionSet("HOST",name,"./Resources/configTemplate.json");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              post("/config-templates/save").
+				              
+				      then().
+				      		  assertThat().statusCode(200);
+					  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("The new template creation Failed");
+		}
+						 
+	}
+	@Test(priority=9)
+	public void configDuplicateTemplate()
+	{
+		try{
+			preConditionSet("HOST",name,"./Resources/configTemplate.json");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              post("/config-templates/save").
+				              
+				      then().
+				      		  assertThat().statusCode(400);
+					  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("The new template creation Failed");
+		}
+				
+						 
+	}
+	@Test(priority=9)
+	public void archieveTemplate()
+	{
+		try{
+			preConditionSet("HOST",name,"./Resources/archiveTemplate.json");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              post("/config-templates/archive").
+				              
+				      then().
+				      		  assertThat().statusCode(200);
+					  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("The template deletion Failed");
+		}
+				
+						 
 	}
 }

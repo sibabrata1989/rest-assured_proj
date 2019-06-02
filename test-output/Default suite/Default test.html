@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Default test</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>0/7/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>0/10/0</td>
 </tr><tr>
-<td>Started on:</td><td>Mon May 27 20:39:41 IST 2019</td>
+<td>Started on:</td><td>Sun Jun 02 12:59:48 IST 2019</td>
 </tr>
-<tr><td>Total time:</td><td>18 seconds (18695 ms)</td>
+<tr><td>Total time:</td><td>26 seconds (26407 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,10 +75,10 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='test_package.UnautorizedAPIsTest.configNew()'><b>configNew</b><br>Test class: test_package.UnautorizedAPIsTest</td>
-<td><div><pre>java.lang.AssertionError: The new Configuration Failed
+<td title='test_package.UnautorizedAPIsTest.archieveTemplate()'><b>archieveTemplate</b><br>Test class: test_package.UnautorizedAPIsTest</td>
+<td><div><pre>java.lang.AssertionError: The template deletion Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.configNew(UnautorizedAPIsTest.java:54)
+	at test_package.UnautorizedAPIsTest.archieveTemplate(UnautorizedAPIsTest.java:287)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -104,10 +104,10 @@ function toggleAllBoxes() {
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-</pre></div><a href='#' onClick='toggleBox("stack-trace1830745997", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1830745997'><pre>java.lang.AssertionError: The new Configuration Failed
+</pre></div><a href='#' onClick='toggleBox("stack-trace1176932104", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1176932104'><pre>java.lang.AssertionError: The template deletion Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.configNew(UnautorizedAPIsTest.java:54)
+	at test_package.UnautorizedAPIsTest.archieveTemplate(UnautorizedAPIsTest.java:287)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -134,13 +134,199 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 </pre></div></td>
-<td>6</td>
-<td>test_package.UnautorizedAPIsTest@4cc0edeb</td></tr>
+<td>2</td>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
+<tr>
+<td title='test_package.UnautorizedAPIsTest.configDuplicateTemplate()'><b>configDuplicateTemplate</b><br>Test class: test_package.UnautorizedAPIsTest</td>
+<td><div><pre>java.lang.AssertionError: The new template creation Failed
+	at org.testng.Assert.fail(Assert.java:93)
+	at test_package.UnautorizedAPIsTest.configDuplicateTemplate(UnautorizedAPIsTest.java:261)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1648232591", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1648232591'><pre>java.lang.AssertionError: The new template creation Failed
+	at org.testng.Assert.fail(Assert.java:93)
+	at test_package.UnautorizedAPIsTest.configDuplicateTemplate(UnautorizedAPIsTest.java:261)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+</pre></div></td>
+<td>2</td>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
+<tr>
+<td title='test_package.UnautorizedAPIsTest.configNew()'><b>configNew</b><br>Test class: test_package.UnautorizedAPIsTest</td>
+<td><div><pre>java.lang.AssertionError: The new Configuration Failed
+	at org.testng.Assert.fail(Assert.java:93)
+	at test_package.UnautorizedAPIsTest.configNew(UnautorizedAPIsTest.java:58)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+</pre></div><a href='#' onClick='toggleBox("stack-trace443290224", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace443290224'><pre>java.lang.AssertionError: The new Configuration Failed
+	at org.testng.Assert.fail(Assert.java:93)
+	at test_package.UnautorizedAPIsTest.configNew(UnautorizedAPIsTest.java:58)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+</pre></div></td>
+<td>7</td>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
+<tr>
+<td title='test_package.UnautorizedAPIsTest.configTemplate()'><b>configTemplate</b><br>Test class: test_package.UnautorizedAPIsTest</td>
+<td><div><pre>java.lang.AssertionError: The new template creation Failed
+	at org.testng.Assert.fail(Assert.java:93)
+	at test_package.UnautorizedAPIsTest.configTemplate(UnautorizedAPIsTest.java:236)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1230701703", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1230701703'><pre>java.lang.AssertionError: The new template creation Failed
+	at org.testng.Assert.fail(Assert.java:93)
+	at test_package.UnautorizedAPIsTest.configTemplate(UnautorizedAPIsTest.java:236)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+</pre></div></td>
+<td>2</td>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
 <tr>
 <td title='test_package.UnautorizedAPIsTest.getGpusAvailable()'><b>getGpusAvailable</b><br>Test class: test_package.UnautorizedAPIsTest</td>
 <td><div><pre>java.lang.AssertionError: The GPUS available get call is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.getGpusAvailable(UnautorizedAPIsTest.java:166)
+	at test_package.UnautorizedAPIsTest.getGpusAvailable(UnautorizedAPIsTest.java:162)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -166,10 +352,10 @@ function toggleAllBoxes() {
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-</pre></div><a href='#' onClick='toggleBox("stack-trace1196982797", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1196982797'><pre>java.lang.AssertionError: The GPUS available get call is Failed
+</pre></div><a href='#' onClick='toggleBox("stack-trace1961595039", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1961595039'><pre>java.lang.AssertionError: The GPUS available get call is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.getGpusAvailable(UnautorizedAPIsTest.java:166)
+	at test_package.UnautorizedAPIsTest.getGpusAvailable(UnautorizedAPIsTest.java:162)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -197,12 +383,12 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 </pre></div></td>
 <td>2</td>
-<td>test_package.UnautorizedAPIsTest@4cc0edeb</td></tr>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
 <tr>
 <td title='test_package.UnautorizedAPIsTest.postConfigurationResume()'><b>postConfigurationResume</b><br>Test class: test_package.UnautorizedAPIsTest</td>
 <td><div><pre>java.lang.AssertionError: The Configuration resume is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postConfigurationResume(UnautorizedAPIsTest.java:137)
+	at test_package.UnautorizedAPIsTest.postConfigurationResume(UnautorizedAPIsTest.java:133)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -228,10 +414,10 @@ function toggleAllBoxes() {
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-</pre></div><a href='#' onClick='toggleBox("stack-trace843710487", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace843710487'><pre>java.lang.AssertionError: The Configuration resume is Failed
+</pre></div><a href='#' onClick='toggleBox("stack-trace1636291061", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1636291061'><pre>java.lang.AssertionError: The Configuration resume is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postConfigurationResume(UnautorizedAPIsTest.java:137)
+	at test_package.UnautorizedAPIsTest.postConfigurationResume(UnautorizedAPIsTest.java:133)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -259,12 +445,12 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 </pre></div></td>
 <td>2</td>
-<td>test_package.UnautorizedAPIsTest@4cc0edeb</td></tr>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
 <tr>
 <td title='test_package.UnautorizedAPIsTest.postFinetune1()'><b>postFinetune1</b><br>Test class: test_package.UnautorizedAPIsTest</td>
 <td><div><pre>java.lang.AssertionError: The Post fine tune with empty value is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postFinetune1(UnautorizedAPIsTest.java:81)
+	at test_package.UnautorizedAPIsTest.postFinetune1(UnautorizedAPIsTest.java:83)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -290,10 +476,10 @@ function toggleAllBoxes() {
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-</pre></div><a href='#' onClick='toggleBox("stack-trace126234454", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace126234454'><pre>java.lang.AssertionError: The Post fine tune with empty value is Failed
+</pre></div><a href='#' onClick='toggleBox("stack-trace974308356", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace974308356'><pre>java.lang.AssertionError: The Post fine tune with empty value is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postFinetune1(UnautorizedAPIsTest.java:81)
+	at test_package.UnautorizedAPIsTest.postFinetune1(UnautorizedAPIsTest.java:83)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -321,12 +507,12 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 </pre></div></td>
 <td>2</td>
-<td>test_package.UnautorizedAPIsTest@4cc0edeb</td></tr>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
 <tr>
 <td title='test_package.UnautorizedAPIsTest.postFinetune1Negative()'><b>postFinetune1Negative</b><br>Test class: test_package.UnautorizedAPIsTest</td>
 <td><div><pre>java.lang.AssertionError: The Post fine tune with empty value is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postFinetune1Negative(UnautorizedAPIsTest.java:193)
+	at test_package.UnautorizedAPIsTest.postFinetune1Negative(UnautorizedAPIsTest.java:186)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -352,10 +538,10 @@ function toggleAllBoxes() {
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-</pre></div><a href='#' onClick='toggleBox("stack-trace40191541", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace40191541'><pre>java.lang.AssertionError: The Post fine tune with empty value is Failed
+</pre></div><a href='#' onClick='toggleBox("stack-trace1937380187", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1937380187'><pre>java.lang.AssertionError: The Post fine tune with empty value is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postFinetune1Negative(UnautorizedAPIsTest.java:193)
+	at test_package.UnautorizedAPIsTest.postFinetune1Negative(UnautorizedAPIsTest.java:186)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -383,7 +569,7 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 </pre></div></td>
 <td>2</td>
-<td>test_package.UnautorizedAPIsTest@4cc0edeb</td></tr>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
 <tr>
 <td title='test_package.UnautorizedAPIsTest.postFinetune2()'><b>postFinetune2</b><br>Test class: test_package.UnautorizedAPIsTest</td>
 <td><div><pre>java.lang.AssertionError: The Post fine tune with values is Failed
@@ -414,8 +600,8 @@ function toggleAllBoxes() {
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-</pre></div><a href='#' onClick='toggleBox("stack-trace1361393151", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1361393151'><pre>java.lang.AssertionError: The Post fine tune with values is Failed
+</pre></div><a href='#' onClick='toggleBox("stack-trace1901238627", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1901238627'><pre>java.lang.AssertionError: The Post fine tune with values is Failed
 	at org.testng.Assert.fail(Assert.java:93)
 	at test_package.UnautorizedAPIsTest.postFinetune2(UnautorizedAPIsTest.java:109)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -445,12 +631,12 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 </pre></div></td>
 <td>2</td>
-<td>test_package.UnautorizedAPIsTest@4cc0edeb</td></tr>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
 <tr>
 <td title='test_package.UnautorizedAPIsTest.postFinetune2Negative()'><b>postFinetune2Negative</b><br>Test class: test_package.UnautorizedAPIsTest</td>
 <td><div><pre>java.lang.AssertionError: The Post fine tune with values is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postFinetune2Negative(UnautorizedAPIsTest.java:222)
+	at test_package.UnautorizedAPIsTest.postFinetune2Negative(UnautorizedAPIsTest.java:212)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -476,10 +662,10 @@ function toggleAllBoxes() {
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-</pre></div><a href='#' onClick='toggleBox("stack-trace18179709", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace18179709'><pre>java.lang.AssertionError: The Post fine tune with values is Failed
+</pre></div><a href='#' onClick='toggleBox("stack-trace1936502650", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1936502650'><pre>java.lang.AssertionError: The Post fine tune with values is Failed
 	at org.testng.Assert.fail(Assert.java:93)
-	at test_package.UnautorizedAPIsTest.postFinetune2Negative(UnautorizedAPIsTest.java:222)
+	at test_package.UnautorizedAPIsTest.postFinetune2Negative(UnautorizedAPIsTest.java:212)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -507,7 +693,7 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 </pre></div></td>
 <td>2</td>
-<td>test_package.UnautorizedAPIsTest@4cc0edeb</td></tr>
+<td>test_package.UnautorizedAPIsTest@457e2f02</td></tr>
 </table><p>
 </body>
 </html>
