@@ -1,0 +1,6 @@
+{
+  "model":"##ModuleName##",
+  "cycleNumber":1,
+  "iterations":1,
+  "finetuneLR":1
+}

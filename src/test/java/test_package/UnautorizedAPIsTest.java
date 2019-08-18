@@ -11,6 +11,7 @@ import static io.restassured.RestAssured.*;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
+import static org.hamcrest.Matchers.*;
 
 public class UnautorizedAPIsTest implements ConstantVariables {
 
@@ -29,7 +30,9 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 	private void preConditionSet(String host, String moduleName, String payLoadPath) throws IOException
 	{
 		payload = ReusableMethodsClass.generateStringFromResources(payLoadPath);
+		if(payload.contains("name")){
 		payload = payload.replace("##ModuleName##", moduleName);
+		}
 		RestAssured.baseURI= prp.getProperty(host);
 	}
 
@@ -263,7 +266,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 				
 						 
 	}
-	@Test(priority=9)
+	@Test(priority=10)
 	public void archieveTemplate()
 	{
 		try{
@@ -285,6 +288,114 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 		{
 			e.printStackTrace();
 			Assert.fail("The template deletion Failed");
+		}
+				
+						 
+	}
+	@Test(priority=11)
+	public void validateDSIPositiv()
+	{
+		try{
+			preConditionSet("HOST",name,"./Resources/validateDSI_Positive.json");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              post("/configuration/validate-dsi").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and().
+				      		  body("message", equalTo("Your Custom Dataset Interface is valid.")).and().
+				      		  body("success", equalTo(true));
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("The DSI Validation Positive- Failed");
+		}
+				
+						 
+	}
+	@Test(priority=12)
+	public void validateDSINegative()
+	{
+		try{
+			preConditionSet("HOST",name,"./Resources/validateDSI_Negative.json");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              post("/configuration/validate-dsi").
+				              
+				      then().
+				      		  assertThat().statusCode(400).and().
+				      		  body("message", contains("An exception occurred in the data pipeline")).and().
+				      		  body("success", equalTo(false));
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("The DSI Validation Negative- Failed");
+		}
+				
+						 
+	}
+	@Test(priority=13)
+	public void validateCycleEdge()
+	{
+		try{
+			preConditionSet("HOST",name,"./Resources/cycleEdge.json");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              post("/cycle/edge").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Validate Cycle Edge is Failed!");
+		}
+				
+						 
+	}
+	@Test(priority=14)
+	public void loginWithoutAuth()
+	{
+		try{
+			preConditionSet("HOST","","./Resources/login.json");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              post("/auth/token").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Login Failed!");
 		}
 				
 						 

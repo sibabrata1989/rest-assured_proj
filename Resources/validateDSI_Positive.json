@@ -1,0 +1,47 @@
+{
+    "network": {
+        "name": "##ModuleName##",
+        "architecture": "/gensynth/input/belgium_traffic_signs/checkpoints-0.meta",
+        "weights": "/gensynth/input/belgium_traffic_signs/",
+        "input_tensor_names": {
+            "image": "ph_images:0",
+            "label": "ph_labels:0"
+        },
+        "output_names": [
+            "NetworkMid/dense/Relu:0"
+        ],
+        "custom_metric_interface_file": "/gensynth/input/config/custom_metrics.py",
+        "custom_metric_interface_class": "CustomMetricsTesting",
+        "accuracy_name": "Accuracy/accuracy:0",
+        "calculate_mean_accuracy": true,
+        "loss_name": "Loss/Mean:0",
+        "metrics_dependencies": [],
+        "runtime_variables": [],
+        "calculate_mean_metrics": {
+            "loss1": true
+        },
+        "metrics": {
+            "loss1": "Loss/Mean:0"
+        }
+    },
+    "generator": {
+        "max_cycles": 10,
+        "accuracy_higher_is_better": true,
+        "freeze_model_name": "frozen",
+        "reduction_ratio": 0.1,
+        "target_size_ratio": 0.35,
+        "train_baseline": false,
+        "inquisitor_subsample_ratio": 0.1
+    },
+    "training": {
+        "max_epochs": 5,
+        "learn_rate_params": {
+            "learning_rate": 0.001
+        },
+        "optimizer_params": {}
+    },
+    "data": {
+        "custom_dataset_interface_file": "/gensynth/input/data/bts_tfrecords/data_interface.py",
+        "custom_dataset_interface_class": "CustomInterface"
+    }
+}
