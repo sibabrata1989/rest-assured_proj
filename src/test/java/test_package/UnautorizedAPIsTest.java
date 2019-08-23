@@ -400,4 +400,131 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 				
 						 
 	}
+	@Test(priority=15)
+	public void getInvocation()
+	{
+		try{
+			preConditionSet("HOST","","");
+		
+					 given().
+							  header("Content-Type","application/json").
+						 
+					  when().    
+				              get("/configuration?invocationId=1").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Get Invocation ID call failed!");
+		}
+				
+						 
+	}
+	@Test(priority=16)
+	public void getWorkersAvailable()
+	{
+		try{
+			preConditionSet("HOST","","");
+		
+					 given().
+							  header("Content-Type","application/json").
+						 
+					  when().    
+				              get("/configuration/workers/available").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Get avialble worker call failed");
+		}
+				
+						 
+	}
+	@Test(priority=17)
+	public void verifyConfigTemplateExists()
+	{
+		try{
+			preConditionSet("HOST","","");
+		
+					 given().
+							  header("Content-Type","application/json").
+						 
+					  when().    
+				              get("/config-templates/exists?name=Belgian%20Traffic%20Signs%20Example&section=1").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Verify Configuration template get call Failed!");
+		}
+				
+						 
+	}
+	@Test(priority=18)
+	public void verifyConfigTemplates()
+	{
+		try{
+			preConditionSet("HOST","","");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              get("/config-templates?section=5").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Verify Config template section wise get call Failed!");
+		}
+				
+						 
+	}
+	@Test(priority=19)
+	public void verifyInvocationCancel()
+	{
+		try{
+			preConditionSet("HOST","","cancelInvocation.json");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body("").
+						 
+					  when().    
+				              post("/invocation/cancel").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Verify Config template section wise get call Failed!");
+		}
+				
+						 
+	}
 }
