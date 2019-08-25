@@ -476,7 +476,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 						 
 	}
 	@Test(priority=18)
-	public void verifyConfigTemplates()
+	public void verifyConfigTemplatesSection5()
 	{
 		try{
 			preConditionSet("HOST","","");
@@ -496,12 +496,38 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			Assert.fail("Verify Config template section wise get call Failed!");
+			Assert.fail("Verify Config template section 5 get call Failed!");
 		}
 				
 						 
 	}
 	@Test(priority=19)
+	public void verifyConfigTemplatesSection4()
+	{
+		try{
+			preConditionSet("HOST","","");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              get("/config-templates?section=4").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Verify Config template section 4 get call Failed!");
+		}
+				
+						 
+	}
+	@Test(priority=20)
 	public void verifyInvocationCancel()
 	{
 		try{
@@ -522,7 +548,7 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			Assert.fail("Verify Config template section wise get call Failed!");
+			Assert.fail("Verify Invocation Cancel call Failed!");
 		}
 				
 						 
