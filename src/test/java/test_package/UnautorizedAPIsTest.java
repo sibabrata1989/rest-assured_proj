@@ -489,7 +489,8 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 				              get("/config-templates?section=5").
 				              
 				      then().
-				      		  assertThat().statusCode(200).and();
+				      		  assertThat().statusCode(200).and().
+				      		  body("section", equalTo(5));
 				      		  Thread.sleep(3000);
 					  
 		}
@@ -515,7 +516,8 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 				              get("/config-templates?section=4").
 				              
 				      then().
-				      		  assertThat().statusCode(200).and();
+				      		  assertThat().statusCode(200).and().
+				      		  body("section", equalTo(4));
 				      		  Thread.sleep(3000);
 					  
 		}
@@ -528,6 +530,32 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 						 
 	}
 	@Test(priority=20)
+	public void verifyConfigTemplatesSection2()
+	{
+		try{
+			preConditionSet("HOST","","");
+		
+					 given().
+							  header("Content-Type","application/json").
+							  body(payload).
+						 
+					  when().    
+				              get("/config-templates?section=2").
+				              
+				      then().
+				      		  assertThat().statusCode(200).and();
+				      		  Thread.sleep(3000);
+					  
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Verify Config template section 4 get call Failed!");
+		}
+				
+						 
+	}
+	@Test(priority=21)
 	public void verifyInvocationCancel()
 	{
 		try{
