@@ -14,7 +14,7 @@ import java.util.Properties;
 import java.util.Random;
 import static org.hamcrest.Matchers.*;
 
-public class CustomAPITest implements ConstantVariables {
+public class CustomAuthAPIsTest implements ConstantVariables {
 
 	Properties prp;
 	String payload;
