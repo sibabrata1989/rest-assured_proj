@@ -19,6 +19,8 @@ public class CustomAuthAPIsTest implements ConstantVariables {
 	Properties prp;
 	String payload;
 	private String token;
+	String userName;
+	Random rnd = new Random();
 	
 	private void preConditionSet(String host,String payLoadPath) throws IOException
 	{
@@ -170,6 +172,147 @@ public class CustomAuthAPIsTest implements ConstantVariables {
 		}
 						 
 	}
+	@Test(priority=5)
+	public void createAndVerifyUserExist()
+	{
+		try{
+			userName = "NewUser"+rnd.nextInt(1000);
+			preConditionSet("HOST","./Resources/CustomAPIPayload/addNewUser.json");
+			payload = payload.replace("##NewUser##", userName);
+			
+			  given().
+					  header("Content-Type","application/json").
+					  header("Authorization","Bearer "+token).
+					  body(payload).
+				 
+			  when().    
+		              post("/user/new").
+		              
+		      then().
+		      		  assertThat().statusCode(200);
+			  Thread.sleep(3000);
+			  
+			 //Verify user exist.... 
+			  Response res = given().
+			  header("Content-Type","application/json").
+			  header("Authorization","Bearer "+token).
+			  body(payload).
+		 
+			  when().    
+		              get("/user/exists?identifier="+userName).
+		              
+		      then().
+		      		  assertThat().statusCode(200).
+			  extract().response();
+
+			  System.out.println(res);
+			  String responseString = res.asString();
+			  Assert.assertTrue(responseString.contains("TRUE"), "Failed!: The user doesn't exist!");
+			  Thread.sleep(3000);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Assert.fail("Verify User failed due to exception!");
+		}
+	}
+		
+	@Test(priority=6)
+	public void updateUserRole()
+		{
+			try{
+				preConditionSet("HOST","./Resources/CustomAPIPayload/updateUserRole.json");
+				payload = payload.replace("##NewUser##", userName);
+				payload = payload.replace("##Role##", "Admin");
+				
+				  Response res = given().
+				  header("Content-Type","application/json").
+				  header("Authorization","Bearer "+token).
+				  body(payload).
+			 
+				  when().    
+			              post("/user/modify-user-role").
+			              
+			      then().
+			      		  assertThat().statusCode(200).
+				  extract().response();
+
+				  System.out.println(res);
+				  String responseString = res.asString();
+				  JsonPath json = new JsonPath(responseString);
+				  Assert.assertEquals(json.get("role"), "Admin", "The role update failed!");
+				  Thread.sleep(3000);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				Assert.fail("Update user failed due to exception!");
+			}
+		}
+		@Test(priority=7)
+		public void verifyChangePassword()
+				{
+					try{
+						preConditionSet("HOST","./Resources/CustomAPIPayload/changePassword.json");
+						payload = payload.replace("##NewUser##", userName);
+						payload = payload.replace("##password##", "98765");
+						
+						  Response res = given().
+						  header("Content-Type","application/json").
+						  header("Authorization","Bearer "+token).
+						  body(payload).
+					 
+						  when().    
+					              post("/user/change-password").
+					              
+					      then().
+					      		  assertThat().statusCode(200).
+						  extract().response();
+
+						  System.out.println(res);
+						  String responseString = res.asString();
+						  JsonPath json = new JsonPath(responseString);
+						 // Assert.assertEquals(json.get("newPassword"), "98765", "The change passwordfailed!");
+						  Thread.sleep(3000);
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+						Assert.fail("Change Password	 failed due to exception!");
+					}
+						 
+				}
+		@Test(priority=8)
+		public void verifyAllUsers()
+		{
+			try{
+				 
+				  Response res = given().
+				  header("Content-Type","application/json").
+				  header("Authorization","Bearer "+token).
+				  
+				  when().    
+			              get("/users").
+			              
+			      then().
+			      		  assertThat().statusCode(200).
+				  extract().response();
+
+				  System.out.println(res);
+				  String responseString = res.asString();
+				  JsonPath json = new JsonPath(responseString);
+				  Assert.assertEquals(json.get("identifier[0]"),"administrator", "Failed!: The Admin user doesn't exist!");
+				  Assert.assertEquals(json.get("identifier[1]"),userName, "Failed!: The added user doesn't exist!");
+				  Assert.assertEquals(json.get("role[0]"),"admin", "Failed!: The Admin role doesn't exist!");
+				  Assert.assertEquals(json.get("role[1]"),"scientist", "Failed!: The added user role doesn't exist!");
+				  Thread.sleep(3000);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				Assert.fail("Verify All user failed due to exception!");
+			}
+		}
 	
 	
 }

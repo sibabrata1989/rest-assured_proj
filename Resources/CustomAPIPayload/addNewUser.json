@@ -1,5 +1,5 @@
 {
-    "identifier": "Newuser123",
+    "identifier": "##NewUser##",
     "role": "scientist",
     "pwd": "123456"
 }
