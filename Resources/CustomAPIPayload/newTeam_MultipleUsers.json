@@ -1,0 +1,14 @@
+{  
+   "name":"Team_2",
+   "members":{  
+      "user1":{  
+         "teamOwner":false
+      },
+      "user2":{  
+         "teamOwner":false
+      },
+      "administrator":{  
+         "teamOwner":true
+      }
+   }
+}
