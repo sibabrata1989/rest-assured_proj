@@ -1,4 +1,5 @@
 package test_package;
+
 import org.json.simple.JSONArray;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -8,494 +9,341 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+
 import static io.restassured.RestAssured.*;
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.locks.Condition;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import static org.hamcrest.Matchers.*;
 
 public class CustomAuthAPIsTest {
-	Properties prp;
-	String payload;
-	String userName = null;
-	String teamName = null;
-	JsonPath json = null;
-	private String token;
-	Random rnd = new Random();
-	DbConnect dbc = DbConnect.getInstance();
+    Properties prp;
+    String payload;
+    String userName = null;
+    String teamName = null;
+    JsonPath json = null;
+    private String token;
+    Random rnd = new Random();
 
 
-	private void preConditionSet(String host,String payLoadPath) throws IOException
-	{
-		        payload = XmlUtils.generateStringFromResources(payLoadPath);
-		        prp = XmlUtils.getPropertyFile();
-		        RestAssured.baseURI= prp.getProperty(host);
-	}
-
-	private void validateUser(ResultSet resultSet, String userName, String status) throws SQLException {
-		if(resultSet.next()) {
-			String userNameDb = resultSet.getString("login_name");
-			String statusDb = resultSet.getString("status");
-			Assert.assertTrue(userName.equalsIgnoreCase(userNameDb), "Validating user name created in DB");
-			Assert.assertTrue(status.equalsIgnoreCase(statusDb), "Validating status created in DB");
-			
-		} else {
-			Assert.fail("login_name" + userName +  " job_status" + status + " could not be retieved from DB.");
-		}
+    private void preConditionSet(String host, String payLoadPath) throws IOException {
+        payload = ReusableMethodsClass.generateStringFromResources(payLoadPath);
+        prp = ReusableMethodsClass.getPropertyFile();
+        RestAssured.baseURI = prp.getProperty(host);
     }
 
 
-	@BeforeClass
-	public void commonService() throws IOException
-	{
-	       try{		
-			preConditionSet("HOST","./Resources/authToken.json");
-                        Response res= given()
-			.header("Content-Type","application/json")
-			.body(payload)
-						 
-			.when()
-			.post("/auth/token")
-				              
-			.then()
-			.assertThat().statusCode(200)
-			.extract().response();
-			String responseString = res.asString();
-			JsonPath json = new JsonPath(responseString);
-			Assert.assertEquals(json.get("auth"), true, "Token not generated! Failed");
-			Assert.assertEquals(json.get("user.identifier"), "administrator","Identifier Mismatch!");
-			token=json.get("token").toString();// Token generated
-			Thread.sleep(3000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("Token generate precondition failed!");
-		}		
-	}
-	
-	@Test(priority=1)
-	public void verifyUserExist()
-	{
-		try{
-					
-			Response res= given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-						 
-			.when()    
-			.get("/user/exists?identifier=administrator")
-				          
-			.then()
-			.assertThat().statusCode(200)
-                        .extract().response();
-			String responseString = res.asString();
-			Assert.assertTrue(responseString.contains("true"), "Failed!: The response of user exist doesn't return true!");
-			Thread.sleep(3000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("The verify User Exist failed!");
-		}
-						 
-	}
-	@Test(priority=2)
-	public void userLogin()
-	{
-		try{
-			RestAssured.baseURI= prp.getProperty("HOST");
-			payload = XmlUtils.generateStringFromResources("./Resources/userLogin.json");
-			payload = payload.replace("##Token##", token);
-		
-			Response res= given()
-			.header("Content-Type","application/json")
-			.body(payload)
-						 
-			.when()    
-			.post("/user/login")
-				        
-			.then()
-			.assertThat().statusCode(200)
-                        .extract().response();
-			String responseString = res.asString();
-			JsonPath json = new JsonPath(responseString);
-			Assert.assertEquals(json.get("user.identifier"), "administrator","Identifier Mismatch!");
-			Thread.sleep(3000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("The verify User Login failed!");
-		}
-						 
-	}
-	
-	@Test(priority=3)
-	public void addNewUser()
-	{
-		try{
-			userName = ("NewUser"+rnd.nextInt(100)).toLowerCase();
-			System.out.println("User created is" +userName);
-			preConditionSet("HOST","./Resources/addNewUser.json");
-			payload = payload.replace("##UserName##", userName);
+    @BeforeClass
+    public void commonService() throws IOException {
+        try {
+            preConditionSet("HOST", "./smart_rec/token_payload.json");
+            Response res = given()
+                    .header("Content-Type", "application/json")
+                    .body(payload)
 
-			given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-			.body(payload)
-						 
-			.when()   
-			.post("/user/new")
-				          
-			.then()
-			.assertThat().statusCode(200);
-			Thread.sleep(10000);
-			ResultSet resultSet = dbc.getDbData("Select login_name,status from users where login_name='" + userName+ "' and status= 't';");
-			validateUser(resultSet,userName,"t");
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("The verify add new User failed!");
-		}
-						 
-	}
-	@Test(priority=4 , enabled=false)
-	public void deleteNewUser()
-	{
-		try{
-			preConditionSet("HOST","./Resources/deleteNewUser.json");
-			payload = payload.replace("##UserName##", userName);
+                    .when()
+                    .post("/oauth/token")
 
-			given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-			.body(payload)
-						 
-			.when()    
-			.post("user/delete")
-			           
-			.then()
-			.assertThat().statusCode(200);
-			Thread.sleep(3000);
-			ResultSet resultSet = dbc.getDbData("Select login_name,status from users where login_name='" + userName+ "' and status= 'f';");
-			validateUser(resultSet,userName,"f");
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("Verify delete User failed!");
-		}
-						 
-	}
-	@Test(priority=6 , enabled=false)
-	public void updateUserRole()
-	{
-		try{
-			preConditionSet("HOST","./Resources/updateUserRole.json");
-			payload = payload.replace("##UserName##", userName);
-			payload = payload.replace("##Role##", "Admin");
+                    .then()
+                    .assertThat().statusCode(200)
+                    .extract().response();
+            String responseString = res.asString();
+            JsonPath js = new JsonPath(responseString);
+            token = js.get("access_token");
+            System.out.println("token is :" + token);
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("Token generate precondition failed!");
+        }
+    }
 
-			Response res = given().
-					header("Content-Type","application/json").
-					header("Authorization","Bearer "+token).
-					body(payload).
+    @Test(priority = 1)
+    public void CheckForCompanyDetails() {
 
-					when().
-					post("/user/modify-user-role").
+        try {
 
-					then().
-					assertThat().statusCode(200).
-					log().all().
-					extract().response();
+            preConditionSet("HOST", "./Resources/CareerBuilder/searchCompany.json");
+            Response res = given()
+                    .header("Content-Type", "application/json")
+                    /*.header("cid", "C1d1267dd")
+                    .header("sig", "ah0VM4eYxdedyWaCvu8fWSBwcnWWFAoMtds2uWXOvlmggu72nze+Ks2tCVBcTA0VrIVw4aOO1rCiIhhKSOvA5Q==")*/
+                    .header("Authorization", token)
+                    .body(payload)
 
-			System.out.println(res);
-//			String responseString = res.asString();
-//			JsonPath json = new JsonPath(responseString);
-//			Assert.assertEquals(json.get("role"), "Admin", "The role update failed!");
-//			Thread.sleep(3000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("Update user failed due to exception!");
-		}
-	}
+                    .when()
+                    .post("/core/smartrecognition/company/search")
 
-	@Test(priority=7)
-	public void verifyChangePassword()
-	{
-		try{
-			preConditionSet("HOST","./Resources/changePassword.json");
-			payload = payload.replace("##UserName##", userName);
-			payload = payload.replace("##password##", "987654");
+                    .then()
+                    .assertThat().statusCode(200)
+                    .extract().response();
+            String responseString = res.asString();
+            JsonPath js = new JsonPath(responseString);
 
-			Response res = given().
-					header("Content-Type","application/json").
-					header("Authorization","Bearer "+token).
-					body(payload).
+            Assert.assertEquals(json.get("data.companies[0].company_name"), "CVS Health Corporation");
+            Assert.assertEquals(json.get("data.companies[0].address"), "11670 Plaza America Drive");
+            Assert.assertEquals(json.get("data.companies[0].city"), "Reston");
+            Assert.assertEquals(json.get("data.companies[0].admin_area"), "VA");
 
-					when().
-					post("/user/change-password").
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("The verify User Exist failed!");
+        }
 
-					then().
-					assertThat().statusCode(200).
-					extract().response();
-//
-//			System.out.println(res);
-//			String responseString = res.asString();
-//			JsonPath json = new JsonPath(responseString);
-//			Assert.assertEquals(json.get("newPassword"), "98765", "The change passwordfailed!");
-//			Thread.sleep(3000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("Change Password failed due to exception!");
-		}
+    }
 
-	}
 
-	@Test(priority=8)
-	public void verifyAllUsers()
-	{
-		
-		try{
+    @Test(priority = 2)
+    public void CheckForCompanyDetailsWithPartialMatch_Invalid() {
+        try {
+            RestAssured.baseURI = prp.getProperty("HOST");
+            payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+            payload = payload.replace("false", "true");
+            //adding space to name
+			payload = payload.replace("CVS Health Corporation", "CVS     Health Corporation");
 
-			Response res = given().
-					header("Content-Type","application/json").
-					header("Authorization","Bearer "+token).
+            Response res = given()
+                    .header("Content-Type", "application/json")
+                    .body(payload)
 
-					when().
-					get("/users").
+                    .when()
+                    .post("/user/login")
 
-					then().
-					assertThat().statusCode(200).
-					extract().response();
+                    .then()
+                    .assertThat().statusCode(502)
+                    .extract().response();
+            String responseString = res.asString();
+            JsonPath json = new JsonPath(responseString);
+            Assert.assertEquals(json.get("errors[0].message"), "SolrSearchRequest returned non-200 response: 406");
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("The company search with space failed!");
+        }
 
-			System.out.println(res);
-			String responseString = res.asString();
-			json = new JsonPath(responseString);
-			Assert.assertEquals(json.get("identifier[0]"),"administrator", "Failed!: The Admin user doesn't exist!");
-			Assert.assertEquals(json.get("identifier[1]"),userName, "Failed!: The added user doesn't exist!");
-			Assert.assertEquals(json.get("role[0]"),"admin", "Failed!: The Admin role doesn't exist!");
-			Assert.assertEquals(json.get("role[1]"),"scientist", "Failed!: The added user role doesn't exist!");
-			Thread.sleep(3000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("Verify All user failed due to exception!");
-		}
-		
-	}
-	//add users method.
-	public void addUsers(int count)
-	{
-		for(int i=1;i<=count;i++)
-		{
-			userName = ("NewUser_"+i);
-			preConditionSet("HOST","./Resources/addNewUser.json");
-			payload = payload.replace("##UserName##", userName);
-	
-			given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-			.body(payload)
-						 
-			.when()   
-			.post("/user/new")
-				          
-			.then()
-			.assertThat().statusCode(200);
-			System.out.println("User "+count+"created is" +userName);
-			Thread.sleep(5000);
-		}
-	}
-	
-	public void deleteTeam(String teamName, String payload)
-	{
-			preConditionSet("HOST",payload);
-			
-			given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-			.body(payload)
-						 
-			.when()   
-			.post("/team/delete")
-				          
-			.then()
-			.assertThat().statusCode(200);
-			System.out.println("Team deleted is" +teamName);
-			Thread.sleep(10000);
-		
-	}
-	
-	@Test(priority=9)
-	public void addNewTeamWithSingleUser()
-	{
-		//precondition..
-		addUsers(3);
-		
-		try{
-			preConditionSet("HOST","./Resources/newTeam_SingleUser.json");
-			
+    }
+
+    @Test(priority = 3)
+		public void CheckForCompanyDetailsWithPartialMatch_Valid() {
+
+			try {
+
+				payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+				payload = payload.replace("false", "true");
+				Response res = given()
+						.header("Content-Type", "application/json")
+						.header("Authorization", token)
+						.body(payload)
+
+						.when()
+						.post("/core/smartrecognition/company/search")
+
+						.then()
+						.assertThat().statusCode(200)
+						.extract().response();
+				String responseString = res.asString();
+				JsonPath js = new JsonPath(responseString);
+                Assert.assertEquals(json.get("data.companies[0].company_name"), "CVS Health Corporation");
+                Assert.assertEquals(json.get("data.companies[0].address"), "11670 Plaza America Drive");
+                Assert.assertEquals(json.get("data.companies[0].city"), "Reston");
+                Assert.assertEquals(json.get("data.companies[0].admin_area"), "VA");
+
+				Thread.sleep(3000);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Assert.fail("The verification of company failed");
+			}
+
+
+    }
+    //todo : verification method pending
+    @Test(priority = 4)
+	public void CheckForCompanyDetailsWithShowIgnored_False() {
+
+		try {
+
+			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+			payload = payload.replace("SHOW_IGNORED", "false");
 			Response res = given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-			.body(payload)
-						 
-			.when()   
-			.post("/team/new")
-				          
-			.then()
-			.assertThat().statusCode(200).body("name[0]", equalTo("Team_1"))
-			
-			.extract().response();
-			String responseString = res.asString();
-			Assert.assertTrue(responseString.contains("user1"),"The user1 in Team_1 is not found in the response!");
-			Assert.assertTrue(responseString.contains("administrator"),"The administrator in Team_1 is not found in the response!");
-			Thread.sleep(5000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("The verify Team Addition with single user Failed!");
-		}
-		finally
-		{
-			deleteTeam("Team_1", "./Resources/deleteteam_SingleUser.json");
-		}
-						 
-	}
-	
-	@Test(priority=10)
-	public void addNewTeamWithMultipleUsers()
-	{
-		
-		try{
-			preConditionSet("HOST","./Resources/newTeam_MultipleUsers.json");
-			
-			Response res = given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-			.body(payload)
-						 
-			.when()   
-			.post("/team/new")
-				          
-			.then()
-			.assertThat().statusCode(200).body("name[0]", equalTo("Team_2"))
-			
-			.extract().response();
-			String responseString = res.asString();
-			Assert.assertTrue(responseString.contains("user1"),"The user1 in Team_2 is not found in the response!");
-			Assert.assertTrue(responseString.contains("user2"),"The user2 in Team_2 is not found in the response!");
-			Assert.assertTrue(responseString.contains("administrator"),"The administrator in Team_2 is not found in the response!");
-			Thread.sleep(5000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("The verify team addition with multiple users Failed!");
-		}
-		finally
-		{
-			deleteTeam("Team_2", "./Resources/deleteteam_MultipleUsers.json");
-		}
-						 
-	}
-	
-	@Test(priority=11)
-	public void addNewTeamWithThreeUsersAndUpdateOwner()
-	{
-		
-		try{
-			preConditionSet("HOST","./Resources/newTeam_ThreeUsers.json");
-			
-			Response res1 = given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-			.body(payload)
-						 
-			.when()   
-			.post("/team/new")
-				          
-			.then()
-			.assertThat().statusCode(200).body("name[0]", equalTo("Team_3"))
-			
-			.extract().response();
-			String responseString = res1.asString();
-			Assert.assertTrue(responseString.contains("user1"),"The user1 in Team_3 is not found in the response!");
-			Assert.assertTrue(responseString.contains("user2"),"The user2 in Team_3 is not found in the response!");
-			Assert.assertTrue(responseString.contains("user3"),"The user3 in Team_3 is not found in the response!");
-			Assert.assertTrue(responseString.contains("administrator"),"The administrator in Team_3 is not found in the response!");
-			Thread.sleep(5000);
-			
-			//update the role
-			preConditionSet("HOST","./Resources/updateTeam3UserRoleAsOwner.json");
-			Response res2 = given()
-					.header("Content-Type","application/json")
-					.header("Authorization","Bearer "+token)
+					.header("Content-Type", "application/json")
+					.header("Authorization", token)
 					.body(payload)
-								 
-					.when()   
-					.post("/team/edit")
-						          
+
+					.when()
+					.post("/core/smartrecognition/company/search")
+
 					.then()
-					.assertThat().statusCode(200).body("members[0].user2.teamOwner", equalTo(true))
-					
+					.assertThat().statusCode(200)
 					.extract().response();
-					Thread.sleep(5000);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Assert.fail("The verify team addition with Three users and update owner Failed!");
-		}
-		finally
-		{
-			deleteTeam("Team_3", "./Resources/deleteTeam_ThreeUsers.json");
-		}
-						 
-	}
-	@Test(priority=10)
-	public void verifyErrorMsgWithTeamAddition()
-	{
-		
-		try{
-			preConditionSet("HOST","./Resources/addNewTeam_WithoutAdministrator.json");
-			
-			Response res = given()
-			.header("Content-Type","application/json")
-			.header("Authorization","Bearer "+token)
-			.body(payload)
-						 
-			.when()   
-			.post("/team/new")
-				          
-			.then()
-			.assertThat().statusCode(400)
-			
-			.extract().response();
 			String responseString = res.asString();
-			json = new JsonPath(responseString);
-			Assert.assertEquals(json.get("message"),"You must be an owner of the team that you're creating","Failed:User is allowed to create a Team and allocated as Owner without Login!");
-			Thread.sleep(5000);
-		}
-		catch(Exception e)
-		{
+			JsonPath js = new JsonPath(responseString);
+
+			//verification method pending
+
+			Thread.sleep(3000);
+		} catch (Exception e) {
 			e.printStackTrace();
-			Assert.fail("The verify error message for team addition is failed!");
+			Assert.fail("The verification of company failed with show Ignored false");
 		}
-						 
+
 	}
+    //todo : verification method pending
+	@Test(priority = 5)
+	public void CheckForCompanyDetailsWithShowIgnored_True() {
+
+		try {
+
+			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+			payload = payload.replace("SHOW_IGNORED", "true");
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.header("Authorization", token)
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/search")
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath js = new JsonPath(responseString);
+
+			//verification method pending
+
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The verification of company failed with show Ignored true");
+		}
+
+	}
+
+	@Test(priority = 6)
+	public void CheckForCompanyDetailsWithPartialAddress() {
+		try {
+			RestAssured.baseURI = prp.getProperty("HOST");
+			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+			payload = payload.replace("false", "true");
+			payload = payload.replace("SHOW_IGNORED", "false");
+			payload = payload.replace("CVS Health Corporation", "CVS");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/search")
+
+					.then()
+					.assertThat().statusCode(400)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].message"), "Requested Address :11670 Plaza America Drive");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The company search with partial address failed!");
+		}
+
+	}
+
+	@Test(priority = 7)
+	public void addCompany() {
+		try {
+			RestAssured.baseURI = prp.getProperty("HOST");
+			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/addCompany.json");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company")
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("data.document_id"), "**********************************");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The company addition failed!");
+		}
+
+	}
+
+
+	@Test(priority = 8)
+	public void addDuplicateCompany() {
+		try {
+			RestAssured.baseURI = prp.getProperty("HOST");
+			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/addCompany.json");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company")
+
+					.then()
+					.assertThat().statusCode(409)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].type"), "Document already exists.");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The company addition failed with duplicate details!");
+		}
+
+	}
+
+	@Test(priority = 9)
+	public void addCompanywithOnlyName() {
+		try {
+			RestAssured.baseURI = prp.getProperty("HOST");
+			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/addCompany.json");
+			payload = payload.replace("WebACE Testing Company", "WebACE Testing Company"+rnd.nextInt(1000));
+			payload = payload.replace("116 W Eastman St", "");
+			payload = payload.replace("Arlington Heights", "");
+			payload = payload.replace("TX", "");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company")
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("data.document_id"), "**********************************");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The company addition failed with duplicate details!");
+		}
+
+	}
+
 
 }
 
