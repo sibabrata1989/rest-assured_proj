@@ -1,26 +1,18 @@
 package test_package;
 
-import org.json.simple.JSONArray;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import library_package.*;
 import org.testng.annotations.Test;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.*;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-import java.util.concurrent.locks.Condition;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import static org.hamcrest.Matchers.*;
 
@@ -31,6 +23,7 @@ public class CustomAuthAPIsTest {
     String teamName = null;
     JsonPath json = null;
     private String token;
+    String docID;
     Random rnd = new Random();
 
 
@@ -103,10 +96,9 @@ public class CustomAuthAPIsTest {
 
 
     @Test(priority = 2)
-    public void CheckForCompanyDetailsWithPartialMatch_Invalid() {
+    public void CheckForCompanyDetailsWithPartialMatch_true() {
         try {
-            RestAssured.baseURI = prp.getProperty("HOST");
-            payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+			preConditionSet("HOST", "./Resources/CareerBuilder/searchCompany.json");
             payload = payload.replace("false", "true");
             //adding space to name
 			payload = payload.replace("CVS Health Corporation", "CVS     Health Corporation");
@@ -136,8 +128,7 @@ public class CustomAuthAPIsTest {
 		public void CheckForCompanyDetailsWithPartialMatch_Valid() {
 
 			try {
-
-				payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+				preConditionSet("HOST", "./Resources/CareerBuilder/searchCompany.json");
 				payload = payload.replace("false", "true");
 				Response res = given()
 						.header("Content-Type", "application/json")
@@ -165,13 +156,12 @@ public class CustomAuthAPIsTest {
 
 
     }
-    //todo : verification method pending
+
     @Test(priority = 4)
 	public void CheckForCompanyDetailsWithShowIgnored_False() {
 
 		try {
-
-			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+			preConditionSet("HOST", "./Resources/CareerBuilder/searchCompany.json");
 			payload = payload.replace("SHOW_IGNORED", "false");
 			Response res = given()
 					.header("Content-Type", "application/json")
@@ -186,8 +176,7 @@ public class CustomAuthAPIsTest {
 					.extract().response();
 			String responseString = res.asString();
 			JsonPath js = new JsonPath(responseString);
-
-			//verification method pending
+			Assert.assertEquals(json.get("data.companies[0].phone_scores[0].contact"),"7034815722");
 
 			Thread.sleep(3000);
 		} catch (Exception e) {
@@ -196,13 +185,12 @@ public class CustomAuthAPIsTest {
 		}
 
 	}
-    //todo : verification method pending
+
 	@Test(priority = 5)
 	public void CheckForCompanyDetailsWithShowIgnored_True() {
 
 		try {
-
-			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+			preConditionSet("HOST", "./Resources/CareerBuilder/searchCompany.json");
 			payload = payload.replace("SHOW_IGNORED", "true");
 			Response res = given()
 					.header("Content-Type", "application/json")
@@ -218,7 +206,7 @@ public class CustomAuthAPIsTest {
 			String responseString = res.asString();
 			JsonPath js = new JsonPath(responseString);
 
-			//verification method pending
+			Assert.assertEquals(json.get("data.companies[0].phone_scores[0].contact"),"7034815722");
 
 			Thread.sleep(3000);
 		} catch (Exception e) {
@@ -231,8 +219,7 @@ public class CustomAuthAPIsTest {
 	@Test(priority = 6)
 	public void CheckForCompanyDetailsWithPartialAddress() {
 		try {
-			RestAssured.baseURI = prp.getProperty("HOST");
-			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/searchCompany.json");
+			preConditionSet("HOST", "./Resources/CareerBuilder/searchCompany.json");
 			payload = payload.replace("false", "true");
 			payload = payload.replace("SHOW_IGNORED", "false");
 			payload = payload.replace("CVS Health Corporation", "CVS");
@@ -259,11 +246,10 @@ public class CustomAuthAPIsTest {
 	}
 
 	@Test(priority = 7)
-	public void addCompany() {
+	public String addCompany() {
 		try {
-			RestAssured.baseURI = prp.getProperty("HOST");
-			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/addCompany.json");
-
+			preConditionSet("HOST", "./Resources/CareerBuilder/addCompany.json");
+			payload = payload.replace("WebACE Testing Company", "WebACE Testing Company"+rnd.nextInt(1000));
 			Response res = given()
 					.header("Content-Type", "application/json")
 					.body(payload)
@@ -277,20 +263,20 @@ public class CustomAuthAPIsTest {
 			String responseString = res.asString();
 			JsonPath json = new JsonPath(responseString);
 			Assert.assertEquals(json.get("data.document_id"), "**********************************");
+
 			Thread.sleep(3000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("The company addition failed!");
 		}
-
+		return json.get("data.document_id");
 	}
 
 
 	@Test(priority = 8)
 	public void addDuplicateCompany() {
 		try {
-			RestAssured.baseURI = prp.getProperty("HOST");
-			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/addCompany.json");
+			preConditionSet("HOST", "./Resources/CareerBuilder/addCompany.json");
 
 			Response res = given()
 					.header("Content-Type", "application/json")
@@ -316,8 +302,7 @@ public class CustomAuthAPIsTest {
 	@Test(priority = 9)
 	public void addCompanywithOnlyName() {
 		try {
-			RestAssured.baseURI = prp.getProperty("HOST");
-			payload = ReusableMethodsClass.generateStringFromResources("./Resources/CareerBuilder/addCompany.json");
+			preConditionSet("HOST", "./Resources/CareerBuilder/addCompany.json");
 			payload = payload.replace("WebACE Testing Company", "WebACE Testing Company"+rnd.nextInt(1000));
 			payload = payload.replace("116 W Eastman St", "");
 			payload = payload.replace("Arlington Heights", "");
@@ -344,6 +329,387 @@ public class CustomAuthAPIsTest {
 
 	}
 
+	@Test(priority = 10)
+	public void updateCompany() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addCompany.json");
+			payload = payload.replace("116 W Eastman St", "200 W Eastman St");
 
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID)
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("data"), "");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The company update failed with duplicate details!");
+		}
+
+	}
+
+	@Test(priority = 11)
+	public void deleteCompany() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addCompany.json");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID)
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("data"), "");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The company deletion failed with duplicate details!");
+		}
+
+	}
+
+	@Test(priority = 12)
+	public void deleteCompany_Negative() {
+		docID= null;
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addCompany.json");
+			payload = payload.replace("116 W Eastman St", "200 W Eastman St");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID)
+
+					.then()
+					.assertThat().statusCode(405)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].message"), "The requested HTTP method is not supported by this resource.");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The company deletion negative failed with duplicate details!");
+		}
+
+	}
+
+	@Test(priority = 13)
+	public void addContactToCompany() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addContact.json");
+			payload = payload.replace("116 W Eastman St", "200 W Eastman St");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019")
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("data"), "");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The company deletion negative failed with duplicate details!");
+		}
+
+	}
+	@Test(priority = 14)
+	public void addContactToCompany_negative() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addContact.json");
+			payload = payload.replace("Phone", "Email");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019")
+
+					.then()
+					.assertThat().statusCode(500)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].message"), "invalid email 8164440019");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The add contact negative failed with duplicate details!");
+		}
+
+	}
+
+	@Test(priority = 15)
+	public void verifyInvalidContactType() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addContact.json");
+			payload = payload.replace("Phone", "ABC");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019")
+
+					.then()
+					.assertThat().statusCode(400)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].type"), "Unknown contact_type");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The add contact with invalid Type negative failed with duplicate details!");
+		}
+
+	}
+
+	@Test(priority = 16)
+	public void addContactwithoutDocId_Negative() {
+		docID= null;
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addContact.json");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019")
+
+					.then()
+					.assertThat().statusCode(404)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].message"), "The requested HTTP resource was not found.");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The add contact without DocID negative failed with duplicate details!");
+		}
+
+	}
+
+	@Test(priority = 17)
+	public void addContactwithoutContactId_Negative() {
+		docID= null;
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addContact.json");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/")
+
+					.then()
+					.assertThat().statusCode(404)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].message"), "The requested HTTP resource was not found.");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The add contact without contact ID negative failed with duplicate details!");
+		}
+
+	}
+
+	@Test(priority = 18)
+	public void ignoreContact() {
+		docID= null;
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addContact.json");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019/ignore")
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("data"), "");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The ignore contact failed!");
+		}
+
+	}
+
+	@Test(priority = 19)
+	public void ignoreContact_Invalid() {
+		docID= null;
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addContact.json");
+
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019/ignore")
+
+					.then()
+					.assertThat().statusCode(400)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].message"), "The requested HTTP resource was not found.");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The ignore contact failed!");
+		}
+
+	}
+
+	@Test(priority = 20)
+	public void addAttempt_true() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addAttempt.json");
+			payload = payload.replace("ORDER_ID", "9561769");
+			payload = payload.replace("ATTEMPT_DATE", "2020-03-02T12:06:48Z");
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019/attempt")
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("data"), "");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The add attempt success!");
+		}
+
+	}
+
+	@Test(priority = 20)
+	public void addAttempt_false() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addAttempt.json");
+			payload = payload.replace("true", "false");
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019/attempt")
+
+					.then()
+					.assertThat().statusCode(200)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("data"), "");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The add attempt success!");
+		}
+
+	}
+
+	@Test(priority = 21)
+	public void addAttemptwithoutOrderID() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addAttempt.json");
+			payload = payload.replace("ORDER_ID", "");
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019/attempt")
+
+					.then()
+					.assertThat().statusCode(400)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].message"), "order_id is required");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The addAttemptwithoutOrderID failed!");
+		}
+
+	}
+
+	@Test(priority = 22)
+	public void addAttemptwithoutAttemptDate() {
+		docID= addCompany();
+		try {
+			preConditionSet("HOST", "./Resources/CareerBuilder/addAttempt.json");
+			payload = payload.replace("ATTEMPT_DATE", "");
+			Response res = given()
+					.header("Content-Type", "application/json")
+					.body(payload)
+
+					.when()
+					.post("/core/smartrecognition/company/"+docID+"/contact/"+"8164440019/attempt")
+
+					.then()
+					.assertThat().statusCode(400)
+					.extract().response();
+			String responseString = res.asString();
+			JsonPath json = new JsonPath(responseString);
+			Assert.assertEquals(json.get("errors[0].message"), "attemptDate cannot be null");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("The addAttemptwithoutAttemptDate failed!");
+		}
+
+	}
 }
 
