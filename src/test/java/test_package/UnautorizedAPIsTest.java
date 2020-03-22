@@ -1,7 +1,9 @@
 package test_package;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import library_package.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -12,6 +14,9 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
 import static org.hamcrest.Matchers.*;
+
+
+@Listeners(library_package.TestStatistics.class)
 
 public class UnautorizedAPIsTest implements ConstantVariables {
 
@@ -579,6 +584,13 @@ public class UnautorizedAPIsTest implements ConstantVariables {
 			Assert.fail("Verify Invocation Cancel call Failed!");
 		}
 				
-						 
+
+	}
+	@AfterSuite
+	public void result() throws Exception {
+		String subject = "Automation Execution Status - Passed: "+ TestStatistics.passedtests.size() +", Failed: "+ TestStatistics.failedtests.size()+ ", Skipped: " + TestStatistics.skippedtests.size();
+		System.out.println(subject);
+		SMTPEmailReport etr=new SMTPEmailReport();
+		SMTPEmailReport.execute("emailaible-report",subject);
 	}
 }

@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMultipart;
 
 import org.testng.annotations.AfterTest;
 public class SMTPEmailReport {
-    public static void execute(String reportFileName) throws Exception {
+    public static void execute(String reportFileName, String subject) throws Exception {
 
         final String username = "sibabrata.liku";
         final String password = "fkhk";
@@ -41,7 +41,7 @@ public class SMTPEmailReport {
             message.setFrom(new InternetAddress("sibabrataa@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("fdsf224@gmail.com"));
-            message.setSubject("Reports Availalbe!");
+            message.setSubject(subject);
             message.setText("Dear Mail Crawler,"
                     + "\n\n No spam to my email, please!");
 
@@ -67,8 +67,8 @@ public class SMTPEmailReport {
 
 
     public static void main(String args[]) throws Exception{
-        SMTPEmailReport etr=new SMTPEmailReport();
-        etr.execute("emailable-report.html");
+      /*  SMTPEmailReport etr=new SMTPEmailReport();
+        etr.execute("emailable-report.html", subject);*/
     }
 }
 
