@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="restassured_proj" target="7" />
+      <module name="restassured_proj" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
